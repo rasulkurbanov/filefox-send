@@ -6,13 +6,17 @@ function App() {
   const [files, setFiles] = useState(null);
 
   const onChangeHandler = (e) => {
-    // console.log(e.target.files[0])
-    setFiles(e.target.files[0]);
+    console.log(e.target.files)
+    
+    setFiles(e.target.files);
   };
 
   const onClickHandler = (e) => {
     const data = new FormData();
-    data.append("file", files);
+    for(let i=0; i<files.length; i++) {
+      data.append("file", files[i]);
+    }
+
     axios
       .post("http://localhost:8000/upload", data)
       .then((response) => {
@@ -33,12 +37,12 @@ function App() {
               <input
                 type="file"
                 className="form-control"
-                multiple=""
+                multiple
                 onChange={onChangeHandler}
               />
               <button
                 type="button"
-                className="btn btn-success btn-block"
+                className="btn btn-primary btn-block"
                 onClick={onClickHandler}
               >
                 Upload
